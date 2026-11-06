@@ -57,7 +57,7 @@ table{border-collapse:collapse;margin:8px auto}td{padding:3px 12px;border-bottom
 <p>Tujuan: kumpulkan <b>5 kunci</b> lalu capai <b>pintu keluar</b> (kotak hijau di pojok kanan bawah). Waktu tercepat menang!</p>
 <p><b>Gerak:</b> WASD / Panah. <b>Interaksi:</b> E / Spasi di dekat pintu kayu. <b>Pause:</b> ESC.<br>HP: joystick kiri, tombol E dan II di kanan.</p>
 <p><b>Pintu kayu:</b> jawab soal dengan benar, pintu terbuka 12 detik. Jawaban salah tidak mengurangi nyawa; coba lagi.</p>
-<p><b>Monster:</b> jika tertangkap, jawab soal hitungan dalam 10 detik. Salah/waktu habis = nyawa -1 (kamu punya 5). Setelah itu kamu kebal sebentar.</p>
+<p><b>Monster:</b> jika tertangkap, jawab soal hitungan dalam 10 detik. Salah/waktu habis = nyawa -1 (kamu punya 5). Setelah itu kamu kebal sebentar. Monster berpatroli di lorong; mereka mulai mengejar hanya jika kamu mendekat, dan berhenti mengejar lalu kembali ke posnya bila kamu cukup menjauh.</p>
 <p><b>Spike:</b> jebakan duri berputar. Aman 3 detik, peringatan 1,2 detik, lalu aktif 1,2 detik. Garis waktu di atas spike menunjukkan sisa waktunya. Saat aktif, spike tidak bisa dilewati. Jika tertusuk: gerak melambat dan waktu +3 detik (nyawa tidak berkurang).</p>
 <p><b>Audio:</b> musik dan efek suara aktif setelah kamu menekan tombol. Atur volume musik/efek atau matikan suara lewat menu AUDIO atau tombol M.</p>
 <button class="btn" id="bBack">KEMBALI</button></div>
@@ -156,7 +156,27 @@ const BANK=[
   {"c":"Matematika","q":"Sebuah sepeda menempuh jarak 24 km dalam 2 jam. Kecepatan rata-ratanya adalah ...","o":["12 km/jam","48 km/jam","6 km/jam","24 km/jam"],"a":0,"e":"Kecepatan = jarak ÷ waktu = 24 ÷ 2 = 12 km/jam."},
   {"c":"Matematika","q":"Jika x = -3, nilai dari 2x² - 5x adalah ...","o":["33","3","21","18"],"a":0,"e":"2 × (-3)² - 5 × (-3) = 2 × 9 + 15 = 18 + 15 = 33."},
   {"c":"Matematika","q":"Hasil dari (2/3) ÷ (4/9) adalah ...","o":["3/2","8/27","27/8","2/3"],"a":0,"e":"Membagi pecahan sama dengan mengalikan kebalikannya: 2/3 × 9/4 = 18/12 = 3/2."},
+  {"c":"Matematika","q":"Sebuah segitiga siku-siku memiliki sisi tegak 6 cm dan 8 cm. Panjang sisi miringnya adalah ...","o":["10 cm","14 cm","48 cm","12 cm"],"a":0,"e":"Teorema Pythagoras: sisi miring = √(6² + 8²) = √(36 + 64) = √100 = 10 cm. Menjumlahkan sisi (14) atau mengalikan (48) adalah kekeliruan umum."},
+  {"c":"Matematika","q":"Akar-akar persamaan x² - 5x + 6 = 0 adalah ...","o":["x = 2 atau x = 3","x = -2 atau x = -3","x = 1 atau x = 6","x = -1 atau x = -6"],"a":0,"e":"Faktorisasi: x² - 5x + 6 = (x - 2)(x - 3) = 0, sehingga x = 2 atau x = 3. Kesalahan tanda menghasilkan akar negatif."},
+  {"c":"Matematika","q":"Bentuk paling sederhana dari √50 adalah ...","o":["5√2","2√5","25√2","10√2"],"a":0,"e":"50 = 25 × 2, sehingga √50 = √25 × √2 = 5√2. Perhatikan 10√2 sebenarnya sama dengan √200, jadi bukan jawaban."},
+  {"c":"Matematika","q":"Pohon yang tingginya 12 m mempunyai bayangan 8 m. Pada saat yang sama, bayangan sebuah tiang bendera 2 m. Tinggi tiang bendera adalah ...","o":["3 m","4 m","2,5 m","6 m"],"a":0,"e":"Segitiga-segitiganya sebangun, sehingga tinggi/bayangan konstan: t/2 = 12/8, maka t = 24/8 = 3 m."},
+  {"c":"Matematika","q":"Luas lingkaran dengan jari-jari 7 cm adalah ... (π = 22/7)","o":["154 cm²","44 cm²","308 cm²","49 cm²"],"a":0,"e":"Luas = π r² = 22/7 × 7² = 22/7 × 49 = 154 cm². Opsi 44 cm² adalah keliling (2πr), bukan luas."},
+  {"c":"Matematika","q":"Median dari data 12, 4, 10, 6, 8, 14 adalah ...","o":["9","8","10","8,5"],"a":0,"e":"Urutkan dahulu: 4, 6, 8, 10, 12, 14. Median = rata-rata dua nilai tengah = (8 + 10) ÷ 2 = 9."},
+  {"c":"Matematika","q":"Pada pelemparan satu dadu, peluang muncul mata dadu genap adalah ...","o":["1/2","1/3","1/6","2/3"],"a":0,"e":"Mata genap ada 3 (2, 4, 6) dari 6 kemungkinan, sehingga peluang = 3/6 = 1/2."},
+  {"c":"Matematika","q":"Hasil dari (-2)⁴ - 2⁴ adalah ...","o":["0","-32","16","32"],"a":0,"e":"Bilangan negatif berpangkat genap bernilai positif: (-2)⁴ = 16 dan 2⁴ = 16, sehingga 16 - 16 = 0."},
+  {"c":"Matematika","q":"Titik A(3, -2) digeser oleh translasi T = (2, 5). Koordinat bayangan A' adalah ...","o":["A'(5, 3)","A'(5, -7)","A'(1, 3)","A'(6, -10)"],"a":0,"e":"A' = (3 + 2, -2 + 5) = (5, 3). Kesalahan umum: kebingungan saat menjumlahkan bilangan negatif pada sumbu y."},
+  {"c":"Matematika","q":"Penyelesaian sistem persamaan 2x + y = 8 dan x - y = 1 adalah ...","o":["x = 3, y = 2","x = 2, y = 4","x = 4, y = 0","x = 1, y = 6"],"a":0,"e":"Jumlahkan kedua persamaan: 3x = 9, sehingga x = 3. Substitusi ke x - y = 1: y = 3 - 1 = 2."},
   {"c":"IPS","q":"Ibu kota Provinsi Jawa Tengah adalah ...","o":["Semarang","Surabaya","Bandung","Yogyakarta"],"a":0,"e":"Kota Semarang adalah ibu kota Provinsi Jawa Tengah."},
+  {"c":"IPS","q":"Kenaikan harga barang dan jasa secara umum dan terus-menerus disebut ...","o":["Inflasi","Deflasi","Devaluasi","Kontraksi"],"a":0,"e":"Inflasi adalah kenaikan harga secara umum dan terus-menerus dalam periode tertentu; deflasi kebalikannya."},
+  {"c":"IPS","q":"Pajak yang dikenakan atas penghasilan wajib pajak disebut ...","o":["Pajak Penghasilan (PPh)","Pajak Pertambahan Nilai (PPN)","Pajak Bumi dan Bangunan","Bea Cukai"],"a":0,"e":"Pajak Penghasilan atau PPh adalah pajak yang dipungut dari penghasilan seseorang atau badan."},
+  {"c":"IPS","q":"APBN adalah singkatan dari ...","o":["Anggaran Pendapatan dan Belanja Negara","Anggaran Penduduk dan Belanja Nasional","Alokasi Pendapatan dan Bantuan Negara","Angkatan Pembantu Belanda Negara"],"a":0,"e":"APBN (Anggaran Pendapatan dan Belanja Negara) memuat rencana penerimaan dan pengeluaran negara selama satu tahun."},
+  {"c":"IPS","q":"Benua terkecil di dunia adalah ...","o":["Australia","Eropa","Antartika","Amerika Selatan"],"a":0,"e":"Australia (Oseania) merupakan benua terkecil di dunia."},
+  {"c":"IPS","q":"Salah satu dampak positif globalisasi bagi pelajar adalah ...","o":["Lebih mudah memperoleh informasi dan wawasan dunia","Budaya lokal langsung hilang","Perdagangan antarnegara terhenti","Tenaga kerja lokal dilarang bekerja"],"a":0,"e":"Globalisasi mempermudah pertukaran informasi, ilmu pengetahuan, dan teknologi antarnegara."},
+  {"c":"IPS","q":"Penduduk yang mampu dan siap bekerja tetapi belum mendapat pekerjaan disebut ...","o":["Pengangguran","Pebisnis","Pensiunan","Pejabat"],"a":0,"e":"Pengangguran adalah angkatan kerja yang tidak mendapatkan pekerjaan meskipun pencariannya aktif."},
+  {"c":"IPS","q":"Salah satu upaya yang tepat untuk mengurangi pengangguran di suatu daerah adalah ...","o":["Membuka lapangan kerja baru melalui usaha mikro","Memperkecil gaji seluruh pekerja","Menutup seluruh pabrik yang ada","Menghentikan pendidikan kejuruan"],"a":0,"e":"Pengembangan usaha mikro dan kecil menyerap tenaga kerja sehingga jumlah penganggur berkurang."},
+  {"c":"IPS","q":"Organisasi dunia yang bertugas menjaga perdamaian dan didirikan pada 24 Oktober 1945 adalah ...","o":["PBB (Perserikatan Bangsa-Bangsa)","ASEAN","OPEC","WTO"],"a":0,"e":"PBB (Perserikatan Bangsa-Bangsa) didirikan setelah Perang Dunia II untuk menjaga perdamaian dunia."},
+  {"c":"IPS","q":"Semboyan Bhinneka Tunggal Ika bermakna ...","o":["Berbeda-beda tetapi tetap satu","Bersatu dalam satu tuhan","Satu bangsa tanpa perbedaan","Berbeda tujuan satu jalur"],"a":0,"e":"Bhinneka Tunggal Ika berarti walaupun berbeda-beda suku, agama, dan budaya, bangsa Indonesia tetap satu kesatuan."},
+  {"c":"IPS","q":"Contoh sikap menjaga persatuan sesuai sila ketiga Pancasila adalah ...","o":["Membina rasa gotong royong","Memaksakan pendapat pribadi","Menghina suku lain","Mengutamakan kepentingan golongan"],"a":0,"e":"Sila ketiga, Persatuan Indonesia, dilaksanakan melalui kerja sama dan rasa kekeluargaan seperti gotong royong."},
   {"c":"IPS","q":"Kegiatan menukar barang dengan barang disebut ...","o":["Barter","Ekspor","Investasi","Konsumsi"],"a":0,"e":"Barter adalah kegiatan tukar-menukar barang tanpa menggunakan uang."},
   {"c":"IPS","q":"Garis khayal yang membagi bumi menjadi belahan utara dan selatan adalah ...","o":["Khatulistiwa","Meridian","Garis Wallace","Garis Weber"],"a":0,"e":"Garis khatulistiwa atau ekuator membagi bumi menjadi belahan utara dan selatan."},
   {"c":"IPS","q":"Benua terluas di dunia adalah ...","o":["Asia","Afrika","Eropa","Australia"],"a":0,"e":"Asia merupakan benua terluas dengan jumlah penduduk terbanyak."},
@@ -186,6 +206,16 @@ const BANK=[
   {"c":"IPS","q":"Suku Asmat berasal dari pulau ...","o":["Papua","Jawa","Bali","Sumatra"],"a":0,"e":"Suku Asmat merupakan salah satu suku asli yang mendiami pulau Papua."},
   {"c":"IPS","q":"Rumah adat dari Jawa Tengah adalah ...","o":["Joglo","Gadang","Tongkonan","Honai"],"a":0,"e":"Rumah Joglo adalah rumah adat masyarakat Jawa Tengah dan Yogyakarta."},
   {"c":"IPS","q":"Upaya menanam kembali hutan yang gundul disebut ...","o":["Reboisasi","Erosi","Abrasi","Urbanisasi"],"a":0,"e":"Reboisasi adalah penanaman kembali lahan hutan yang rusak atau gundul."},
+  {"c":"Sejarah Indonesia","q":"Kerajaan Hindu tertua di Indonesia adalah ...","o":["Kutai","Tarumanegara","Majapahit","Sriwijaya"],"a":0,"e":"Kerajaan Kutai di Kalimantan Timur (sekitar abad ke-4/5), yang dikenal melalui prasasti Yupa, dianggap kerajaan Hindu tertua di Indonesia."},
+  {"c":"Sejarah Indonesia","q":"Prasasti Yupa peninggalan Kerajaan Kutai ditulis dengan huruf ...","o":["Pallawa dan bahasa Sanskerta","Jawa Kuno dan bahasa Melayu","Arab dan bahasa Persia","Kawi dan bahasa Jawa"],"a":0,"e":"Prasasti Yupa ditulis menggunakan huruf Pallawa dan bahasa Sanskerta."},
+  {"c":"Sejarah Indonesia","q":"Tokoh yang memimpin perlawanan Perang Padri di Sumatra Barat adalah ...","o":["Tuanku Imam Bonjol","Sultan Hasanuddin","Pangeran Diponegoro","Kapitan Pattimura"],"a":0,"e":"Tuanku Imam Bonjol memimpin Perang Padri; ia ditangkap Belanda pada 1832 dan diasingkan ke Ambon."},
+  {"c":"Sejarah Indonesia","q":"Sisingamangaraja XII dikenal sebagai pahlawan perlawanan dari ...","o":["Tapanuli, Sumatra Utara","Sulawesi Selatan","Kalimantan Selatan","Jawa Tengah"],"a":0,"e":"Sisingamangaraja XII memimpin perlawanan masyarakat Batak di Tapanuli, Sumatra Utara, terhadap Belanda."},
+  {"c":"Sejarah Indonesia","q":"Serangan Umum 1 Maret 1949 berhasil merebut kembali kota ...","o":["Yogyakarta dari tangan Belanda","Bandung dari tangan Sekutu","Surabaya dari tangan Sekutu","Medan dari tangan Jepang"],"a":0,"e":"Serangan Umum 1 Maret 1949 merebut kembali Yogyakarta dan membuktikan kepada dunia bahwa Indonesia masih ada."},
+  {"c":"Sejarah Indonesia","q":"Belanda secara resmi mengakui kedaulatan Indonesia pada ...","o":["27 Desember 1949","17 Agustus 1945","10 November 1945","5 Juli 1959"],"a":0,"e":"Pengakuan kedaulatan Indonesia ditandatangani pada 27 Desember 1949 hasil Konferensi Meja Bundar."},
+  {"c":"Sejarah Indonesia","q":"Perundingan yang menghasilkan Perjanjian Renville (1948) dilaksanakan di ...","o":["Atas kapal perang Amerika Serikat, USS Renville","Istana Negara di Jakarta","Kantor Gubernur di Yogyakarta","Markas besar Belanda di Batavia"],"a":0,"e":"Perjanjian Renville ditandatangani pada 17 Januari 1948 di atas kapal perang Amerika Serikat USS Renville di teluk Jakarta."},
+  {"c":"Sejarah Indonesia","q":"Pahlawan wanita dari Jawa Barat yang mendirikan sekolah untuk perempuan pada 1904 adalah ...","o":["Dewi Sartika","Cut Nyak Dhien","Christina Martha Tiahahu","Cut Meutia"],"a":0,"e":"Dewi Sartika mendirikan Sakolah Isteri (sekolah untuk perempuan) di Bandung pada 1904."},
+  {"c":"Sejarah Indonesia","q":"Tokoh yang dianggap pelopor dan salah satu pendiri Budi Utomo adalah ...","o":["Dr. Soetomo bersama dr. Wahidin Sudirohusodo","Soekarno dan Hatta","Gajah Mada dan Hayam Wuruk","Douwes Dekker dan Cipto Mangunkusumo"],"a":0,"e":"Budi Utomo (20 Mei 1908) digagas dr. Wahidin Sudirohusodo dan didirikan dr. Soetomo bersama pelajar STOVIA."},
+  {"c":"Sejarah Indonesia","q":"Lagu Indonesia Raya diperdengarkan pertama kali pada Sumpah Pemuda 1928 oleh penggubahnya, yaitu ...","o":["Wage Rudolf Supratman","Ismail Marzuki","Cornel Simanjuntak","Koesbini"],"a":0,"e":"W.R. Supratman menciptakan Indonesia Raya dan memperdengarkannya pada Kongres Pemuda II, 28 Oktober 1928."},
   {"c":"Sejarah Indonesia","q":"Proklamasi kemerdekaan Indonesia dibacakan pada ...","o":["17 Agustus 1945","17 Agustus 1950","1 Juni 1945","28 Oktober 1928"],"a":0,"e":"Proklamasi kemerdekaan Indonesia dibacakan oleh Soekarno pada 17 Agustus 1945."},
   {"c":"Sejarah Indonesia","q":"Candi Borobudur dibangun oleh wangsa ...","o":["Syailendra","Majapahit","Sriwijaya","Mataram Islam"],"a":0,"e":"Candi Borobudur dibangun pada masa wangsa Syailendra."},
   {"c":"Sejarah Indonesia","q":"Sumpah Pemuda diikrarkan pada tahun ...","o":["1928","1908","1945","1966"],"a":0,"e":"Sumpah Pemuda diikrarkan pada 28 Oktober 1928 dalam Kongres Pemuda II."},
@@ -217,6 +247,16 @@ const BANK=[
   {"c":"Sejarah Indonesia","q":"Dekrit Presiden yang membubarkan Konstituante dikeluarkan pada ...","o":["5 Juli 1959","17 Agustus 1945","1 Juni 1945","28 Oktober 1928"],"a":0,"e":"Dekrit Presiden dikeluarkan pada 5 Juli 1959 dan memberlakukan kembali UUD 1945."},
   {"c":"Sejarah Indonesia","q":"Reformasi yang mengakhiri pemerintahan Orde Baru terjadi pada tahun ...","o":["1998","1966","1975","2004"],"a":0,"e":"Reformasi tahun 1998 menandai berakhirnya pemerintahan Orde Baru."},
   {"c":"Bahasa Indonesia","q":"Antonim kata \"rajin\" adalah ...","o":["malas","tekun","giat","ulet"],"a":0,"e":"Lawan kata atau antonim dari rajin adalah malas."},
+  {"c":"Bahasa Indonesia","q":"Antonim kata \"semangat\" adalah ...","o":["lesu","giat","tekun","ulet"],"a":0,"e":"Lawan kata semangat adalah lesu atau lemas."},
+  {"c":"Bahasa Indonesia","q":"Penulisan yang sesuai dengan kata baku adalah ...","o":["praktik","praktek","practise","practik"],"a":0,"e":"Menurut KBBI, bentuk baku adalah praktik; bentuk praktek tidak baku."},
+  {"c":"Bahasa Indonesia","q":"Paragraf yang ide pokoknya terletak di awal kalimat disebut paragraf ...","o":["deduktif","induktif","campuran","deskriptif"],"a":0,"e":"Paragraf deduktif diawali ide pokok, kemudian diikuti kalimat-kalimat penjelas."},
+  {"c":"Bahasa Indonesia","q":"Paragraf yang ide pokoknya terletak di akhir kalimat disebut paragraf ...","o":["induktif","deduktif","naratif","prosedural"],"a":0,"e":"Paragraf induktif menempatkan ide pokok di akhir setelah kalimat-kalimat penjelas."},
+  {"c":"Bahasa Indonesia","q":"Ungkapan \"ringan tangan\" berarti ...","o":["suka menolong","lelah bekerja","jago bermain bola","gemar berkata-kata"],"a":0,"e":"Ringan tangan menggambarkan orang yang suka menolong tanpa diminta."},
+  {"c":"Bahasa Indonesia","q":"Kalimat berikut yang penulisannya sudah baku adalah ...","o":["Keluarga itu mengalami musibah.","Keluarga itu mengalamin musibah.","Keluarga itu mengalami musibat.","Keluarga itu musibah mengalami."],"a":0,"e":"Kata kerja baku-nya mengalami dan pasangan yang tepat adalah musibah, bukan musibat, mengalamin, atau kalimat dengan urutan kata yang keliru."},
+  {"c":"Bahasa Indonesia","q":"Konjungsi \"karena\" menyatakan hubungan ...","o":["sebab","waktu","tujuan","syarat"],"a":0,"e":"Konjungsi karena menghubungkan dua klausa dengan hubungan sebab-akibat."},
+  {"c":"Bahasa Indonesia","q":"Teks berikut yang termasuk teks prosedur adalah ...","o":["Resep nasi goreng","Puisi tentang ibu","Berita tentang banjir","Dongeng Danau Toba"],"a":0,"e":"Teks prosedur berisi langkah-langkah mencapai tujuan, contohnya resep masakan."},
+  {"c":"Bahasa Indonesia","q":"Kata tanya untuk menanyakan tempat adalah ...","o":["di mana","siapa","kapan","mengapa"],"a":0,"e":"Kata tanya di mana digunakan untuk menanyakan tempat atau lokasi."},
+  {"c":"Bahasa Indonesia","q":"Arti kata \"melirik\" adalah ...","o":["memandang sekilas sambil menoleh","berjalan pelan-pelan","membajak sawah tetangga","menepuk punggung lembut"],"a":0,"e":"Melirik berarti memandang sekilas sambil menoleh, biasanya dengan maksud tertentu."},
   {"c":"Bahasa Indonesia","q":"Kalimat dengan penulisan huruf kapital yang benar adalah ...","o":["Kami pergi ke Bandung hari Senin.","kami pergi ke bandung hari senin.","Kami pergi ke bandung Hari senin.","Kami Pergi ke Bandung hari Senin."],"a":0,"e":"Nama kota dan nama hari ditulis dengan huruf kapital, sedangkan kata lain mengikuti aturan."},
   {"c":"Bahasa Indonesia","q":"Sinonim kata \"pandai\" adalah ...","o":["cerdas","bodoh","lambat","malas"],"a":0,"e":"Sinonim atau persamaan kata pandai adalah cerdas."},
   {"c":"Bahasa Indonesia","q":"Kata baku yang benar adalah ...","o":["apotek","apotik","apoteek","apothek"],"a":0,"e":"Bentuk baku menurut KBBI adalah apotek."},
@@ -275,7 +315,69 @@ const BANK=[
   {"c":"Bahasa Inggris","q":"She has been studying English ___ two years.","o":["for","since","in","at"],"a":0,"e":"For digunakan untuk durasi, seperti two years."},
   {"c":"Bahasa Inggris","q":"A person who writes books is a ...","o":["writer","reader","teacher","painter"],"a":0,"e":"Orang yang menulis buku disebut writer."},
   {"c":"Bahasa Inggris","q":"The synonym of \"begin\" is ...","o":["start","end","stop","finish"],"a":0,"e":"Start memiliki makna yang sama dengan begin, yaitu memulai."},
-  {"c":"Bahasa Inggris","q":"We ___ to the beach last Sunday.","o":["went","go","goes","going"],"a":0,"e":"Last Sunday menunjukkan masa lalu, sehingga gunakan went."}
+  {"c":"Bahasa Inggris","q":"The past tense of \"eat\" is ...","o":["ate","eated","eaten","eats"],"a":0,"e":"Bentuk past tense tidak beraturan dari eat adalah ate; eaten dipakai pada perfect tense."},
+  {"c":"Bahasa Inggris","q":"The comparative form of \"good\" is ...","o":["better","best","gooder","more good"],"a":0,"e":"Comparative dari good adalah better, sedangkan best adalah superlative."},
+  {"c":"Bahasa Inggris","q":"The opposite of \"expensive\" is ...","o":["cheap","dear","pricey","costly"],"a":0,"e":"Lawan kata expensive (mahal) adalah cheap (murah)."},
+  {"c":"Bahasa Inggris","q":"A person who cooks food in a restaurant is a ...","o":["chef","waiter","farmer","singer"],"a":0,"e":"Chef adalah juru masak, orang yang memasak makanan di dapur."},
+  {"c":"Bahasa Inggris","q":"I am interested ___ music.","o":["in","at","on","to"],"a":0,"e":"'Interested in' adalah pasangan kata yang baku untuk menunjukkan minat."},
+  {"c":"Bahasa Inggris","q":"Please listen ___ the teacher.","o":["to","at","for","with"],"a":0,"e":"'Listen to' digunakan sebelum objek yang didengarkan."},
+  {"c":"Bahasa Inggris","q":"My father is a doctor. He ___ his patients every day.","o":["helps","help","helping","helped"],"a":0,"e":"Subjek He pada kebiasaan sehari-hari (present simple) memerlukan bentuk helps."},
+  {"c":"Bahasa Inggris","q":"There are many ___ in the library.","o":["books","book","bookss","book's"],"a":0,"e":"Kata many diikuti kata benda jamak, sehingga bentuk yang tepat adalah books."},
+  {"c":"Bahasa Inggris","q":"\"Turn on the light, please.\" The underlined words mean ...","o":["Nyalakan lampu","Matikan lampu","Rapikan lampu","Beli lampu"],"a":0,"e":"Turn on berarti menyalakan; lawannya turn off berarti mematikan."},
+  {"c":"Bahasa Inggris","q":"The antonym of \"always\" is ...","o":["never","usually","often","sometimes"],"a":0,"e":"Lawan kata always (selalu) adalah never (tidak pernah)."},
+  {"c":"Bahasa Inggris","q":"We ___ to the beach last Sunday.","o":["went","go","goes","going"],"a":0,"e":"Last Sunday menunjukkan masa lalu, sehingga gunakan went."},
+  {"c":"Pengetahuan Umum","q":"Rumus kimia air adalah ...","o":["H₂O","CO₂","O₂","NaCl"],"a":0,"e":"Air tersusun dari dua atom hidrogen dan satu atom oksigen, sehingga rumusnya H₂O."},
+  {"c":"Pengetahuan Umum","q":"Planet terbesar dalam tata surya adalah ...","o":["Jupiter","Saturnus","Neptunus","Bumi"],"a":0,"e":"Jupiter merupakan planet terbesar di tata surya, jauh lebih besar daripada Bumi."},
+  {"c":"Pengetahuan Umum","q":"Satelit alami yang mengorbit Bumi adalah ...","o":["Bulan","Mars","Venus","Merkurius"],"a":0,"e":"Bulan adalah satu-satunya satelit alami Bumi."},
+  {"c":"Pengetahuan Umum","q":"Bagian mata yang mengatur banyaknya cahaya yang masuk adalah ...","o":["iris","kornea","lensa","retina"],"a":0,"e":"Iris bekerja seperti diafragma kamera; pupil di tengahnya membesar atau mengecil sesuai banyaknya cahaya."},
+  {"c":"Pengetahuan Umum","q":"Proses perubahan wujud gas menjadi cair disebut ...","o":["kondensasi","evaporasi","sublimasi","kristalisasi"],"a":0,"e":"Kondensasi terjadi ketika uap air kehilangan kalor dan menjadi cair, misalnya embun pada kaca mobil."},
+  {"c":"Pengetahuan Umum","q":"Satuan gaya dalam Sistem Internasional (SI) adalah ...","o":["newton","joule","watt","ampere"],"a":0,"e":"Gaya diukur dalam newton (N), diambil dari nama ilmuwan Isaac Newton."},
+  {"c":"Pengetahuan Umum","q":"Tumbuhan menyerap gas ... untuk melakukan fotosintesis.","o":["karbon dioksida","oksigen","nitrogen","helium"],"a":0,"e":"Fotosintesis memerlukan karbon dioksida, air, dan cahaya matahari, lalu menghasilkan oksigen."},
+  {"c":"Pengetahuan Umum","q":"Satuan penyimpanan data yang lebih besar daripada gigabyte adalah ...","o":["terabyte","megabyte","kilobyte","byte"],"a":0,"e":"Urutan satuan dari kecil ke besar: byte, KB, MB, GB, TB. 1 TB = 1.024 GB."},
+  {"c":"Pengetahuan Umum","q":"Perangkat lunak pada komputer disebut juga ...","o":["software","hardware","brainware","mainboard"],"a":0,"e":"Software adalah perangkat lunak; hardware perangkat keras, dan brainware adalah penggunanya."},
+  {"c":"Pengetahuan Umum","q":"Ilmuwan yang merumuskan hukum gravitasi setelah mengamati buah yang jatuh adalah ...","o":["Isaac Newton","Albert Einstein","Galileo Galilei","Nikola Tesla"],"a":0,"e":"Isaac Newton merumuskan hukum gravitasi universal pada abad ke-17."},
+  {"c":"Pengetahuan Umum","q":"Alat yang digunakan untuk mengukur suhu tubuh disebut ...","o":["termometer","barometer","altimeter","seismograf"],"a":0,"e":"Termometer mengukur suhu; barometer mengukur tekanan udara, altimeter mengukur ketinggian, dan seismograf mencatat getaran gempa."},
+  {"c":"Pengetahuan Umum","q":"Sungai yang dikenal sebagai sungai terpanjang di dunia adalah ...","o":["Sungai Nil","Sungai Amazon","Sungai Yangtze","Sungai Kapuas"],"a":0,"e":"Sungai Nil di Afrika memiliki panjang sekitar 6.650 km dan lazim disebut sungai terpanjang di dunia."},
+  {"c":"Pengetahuan Umum","q":"Samudra terluas dan terdalam di dunia adalah ...","o":["Samudra Pasifik","Samudra Atlantik","Samudra Hindia","Samudra Arktik"],"a":0,"e":"Samudra Pasifik adalah lautan terluas dan terdalam di Bumi."},
+  {"c":"Pengetahuan Umum","q":"Puncak tertinggi di dunia adalah ...","o":["Gunung Everest","Gunung Kilimanjaro","Gunung Elbrus","Puncak Jaya"],"a":0,"e":"Gunung Everest di perbatasan Nepal-Tibet setinggi sekitar 8.848 m. Puncak Jaya adalah yang tertinggi di Indonesia."},
+  {"c":"Pengetahuan Umum","q":"Ibu kota negara Jepang adalah ...","o":["Tokyo","Osaka","Kyoto","Seoul"],"a":0,"e":"Tokyo adalah ibu kota Jepang; Seoul merupakan ibu kota Korea Selatan."},
+  {"c":"Pengetahuan Umum","q":"Menara Eiffel, ikon yang dibangun pada 1889, terletak di kota ...","o":["Paris","London","Roma","Berlin"],"a":0,"e":"Menara Eiffel dibangun di Paris, Prancis, sebagai ikon pameran dunia 1889."},
+  {"c":"Pengetahuan Umum","q":"Indonesia memiliki ... zona waktu.","o":["Tiga (WIB, WITA, dan WIT)","Dua (WIB dan WITA)","Empat waktu internasional","Satu (WIB saja)"],"a":0,"e":"Zona waktu Indonesia: WIB (GMT+7), WITA (GMT+8), dan WIT (GMT+9)."},
+  {"c":"Pengetahuan Umum","q":"Gurun pasir terluas di dunia adalah ...","o":["Gurun Sahara","Gurun Gobi","Gurun Kalahari","Gurun Namib"],"a":0,"e":"Gurun Sahara di Afrika Utara adalah gurun pasir terluas, sekitar 9,2 juta km persegi."},
+  {"c":"Pengetahuan Umum","q":"Negara yang ibu kotanya Bangkok adalah ...","o":["Thailand","Vietnam","Myanmar","Filipina"],"a":0,"e":"Bangkok adalah ibu kota Thailand."},
+  {"c":"Pengetahuan Umum","q":"Selat yang memisahkan Sumatra dengan Semenanjung Malaya (Malaysia) adalah ...","o":["Selat Malaka","Selat Sunda","Selat Lombok","Selat Makassar"],"a":0,"e":"Selat Malaka memisahkan Sumatra dan Semenanjung Malaya serta merupakan jalur pelayaran penting dunia."},
+  {"c":"Pengetahuan Umum","q":"Sampah yang mudah membusuk secara alami, seperti sisa makanan dan daun, disebut sampah ...","o":["organik","anorganik","plastik","kimia"],"a":0,"e":"Sampah organik berasal dari makhluk hidup sehingga mudah didekomposisi; sampah plastik sulit terurai."},
+  {"c":"Pengetahuan Umum","q":"Gas rumah kaca yang paling banyak dilepaskan kendaraan bermotor adalah ...","o":["karbon dioksida (CO₂)","oksigen (O₂)","nitrogen (N₂)","helium (He)"],"a":0,"e":"Pembakaran bahan bakar fosil melepaskan CO₂ yang memerangkap panas di atmosfer."},
+  {"c":"Pengetahuan Umum","q":"Program 3R dalam pengelolaan sampah terdiri atas reduce, reuse, dan ...","o":["recycle","rebuild","replace","reward"],"a":0,"e":"3R meliputi reduce (mengurangi), reuse (menggunakan kembali), dan recycle (mendaur ulang)."},
+  {"c":"Pengetahuan Umum","q":"Salah satu penyebab utama banjir di kota besar adalah ...","o":["Membuang sampah ke saluran air","Menanam pohon di tepi jalan","Membuat sumur resapan","Membangun taman kota"],"a":0,"e":"Sampah yang menyumbat saluran air membuat aliran air hujan terhambat sehingga banjir mudah terjadi."},
+  {"c":"Pengetahuan Umum","q":"Energi yang tidak akan habis, seperti energi matahari dan angin, disebut ...","o":["energi terbarukan","energi fosil","energi nuklir","energi kimia"],"a":0,"e":"Energi terbarukan diperbarui secara alami, misalnya surya, angin, air, dan panas bumi."},
+  {"c":"Pengetahuan Umum","q":"Kenaikan suhu rata-rata bumi secara bertahap karena gas rumah kaca dikenal sebagai ...","o":["pemanasan global","gerhana bulan","badai tropis","gerhana matahari"],"a":0,"e":"Pemanasan global terjadi karena peningkatan gas rumah kaca yang memerangkap panas di atmosfer."},
+  {"c":"Pengetahuan Umum","q":"Tindakan yang paling membantu mengurangi pencemaran udara adalah ...","o":["Menggunakan transportasi umum","Membakar sampah di halaman rumah","Mengidupkan mesin motor saat berhenti lama","Mengganti hutan menjadi parkir besar"],"a":0,"e":"Transportasi umum mengurangi jumlah kendaraan sehingga jumlah emisi udara turun."},
+  {"c":"Pengetahuan Umum","q":"Tari Kecak yang ditampilkan pemuda duduk melingkar berasal dari ...","o":["Bali","Jawa Timur","Sumatra Barat","Papua"],"a":0,"e":"Tari Kecak berasal dari Bali dan mengangkat kisah Ramayana."},
+  {"c":"Pengetahuan Umum","q":"Angklung, alat musik bambu yang dimainkan dengan digoyang, berasal dari ...","o":["Jawa Barat","Jawa Tengah","Kalimantan Barat","Maluku"],"a":0,"e":"Angklung adalah alat musik tradisional masyarakat Sunda, Jawa Barat, dan diakui UNESCO pada 2010."},
+  {"c":"Pengetahuan Umum","q":"Rumah Gadang dengan atap bergonjong adalah rumah adat ...","o":["Sumatra Barat","Jawa Timur","Sulawesi Selatan","Kalimantan Timur"],"a":0,"e":"Rumah Gadang adalah rumah adat masyarakat Minangkabau di Sumatra Barat."},
+  {"c":"Pengetahuan Umum","q":"Tari Saman yang dimainkan berjajar dengan gerakan cepat dan kompak berasal dari ...","o":["Aceh","Papua","Bali","Nusa Tenggara Barat"],"a":0,"e":"Tari Saman berasal dari masyarakat Gayo, Aceh."},
+  {"c":"Pengetahuan Umum","q":"Warisan budaya Indonesia yang diakui UNESCO pada 2 Oktober 2009 adalah ...","o":["Batik","Wayang","Angklung","Keris"],"a":0,"e":"Batik ditetapkan UNESCO sebagai Warisan Kemanusiaan pada 2 Oktober 2009; tanggal itu kini dirayakan sebagai Hari Batik Nasional."},
+  {"c":"Pengetahuan Umum","q":"Candi Borobudur, candi Buddha terbesar di dunia, terletak di ...","o":["Magelang, Jawa Tengah","Blitar, Jawa Timur","Bukittinggi, Sumatra Barat","Singaraja, Bali"],"a":0,"e":"Candi Borobudur berada di Magelang, Jawa Tengah, dan dibangun pada masa wangsa Syailendra."},
+  {"c":"Pengetahuan Umum","q":"Sila ketiga Pancasila berbunyi ...","o":["Persatuan Indonesia","Kemanusiaan yang adil dan beradab","Ketuhanan Yang Maha Esa","Keadilan sosial bagi seluruh rakyat Indonesia"],"a":0,"e":"Sila ketiga adalah Persatuan Indonesia, yang lambangnya pohon beringin."},
+  {"c":"Pengetahuan Umum","q":"Salah satu bentuk partisipasi warga negara dalam pemilihan umum adalah ...","o":["Menggunakan hak pilih di TPS","Menjual hak pilih","Menghalangi tetangga pergi memilih","Membuat keributan di TPS"],"a":0,"e":"Warga memenuhi hak politiknya dengan memilih secara langsung, bebas, rahasia, dan bertanggung jawab."},
+  {"c":"Pengetahuan Umum","q":"Sikap yang mencerminkan toleransi antarumat beragama adalah ...","o":["Menghormati tetangga yang sedang beribadah","Melarang orang lain beribadah","Memaksakan agama sendiri kepada tetangga","Mengganggu acara keagamaan tetangga"],"a":0,"e":"Toleransi berarti menghargai ibadah dan keyakinan orang lain tanpa memaksakan keyakinan sendiri."},
+  {"c":"Pengetahuan Umum","q":"Contoh tanggung jawab warga negara terhadap negara adalah ...","o":["Membayar pajak dengan jujur","Menghindari membayar pajak","Menggelapkan bansos","Mengabaikan kewajiban yang ada"],"a":0,"e":"Pajak yang dibayarkan dengan jujur digunakan negara untuk membangun fasilitas publik bagi seluruh rakyat."},
+  {"c":"Pengetahuan Umum","q":"Nomor telepon darurat umum nasional Indonesia adalah ...","o":["112","110","119","911"],"a":0,"e":"112 adalah nomor darurat nasional; selain itu 110 untuk polisi, 113 untuk pemadam kebakaran, dan 119 untuk ambulans."},
+  {"c":"Pengetahuan Umum","q":"Dokumen identitas resmi yang wajib dimiliki warga negara Indonesia sejak usia 17 tahun adalah ...","o":["KTP (Kartu Tanda Penduduk)","SIM motor","Kartu pelajar","Kartu anggota organisasi"],"a":0,"e":"Sesuai undang-undang, setiap warga negara yang berusia 17 tahun wajib memiliki KTP elektronik."},
+  {"c":"Pengetahuan Umum","q":"Manfaat utama menabung di bank adalah ...","o":["Uang tersimpan aman dan bisa memperoleh bunga","Uang langsung bertambah banyak tanpa batas","Pajak warga otomatis lunas","Uang tidak dapat diambil lagi oleh siapa pun"],"a":0,"e":"Menyimpan uang di bank membuat dana lebih aman dan pemiliknya memperoleh jasa bunga sesuai ketentuan."},
+  {"c":"Pengetahuan Umum","q":"Ilmuwan yang merumuskan teori relativitas pada awal abad ke-20 adalah ...","o":["Albert Einstein","Isaac Newton","Thomas Edison","Alexander Graham Bell"],"a":0,"e":"Teori relativitas dirumuskan oleh Albert Einstein dan mengubah pemahaman tentang ruang, waktu, dan energi."},
+  {"c":"Pengetahuan Umum","q":"Tokoh yang mengembangkan lampu pijar secara praktis pada 1879 adalah ...","o":["Thomas Alva Edison","Nikola Tesla","Benjamin Franklin","James Watt"],"a":0,"e":"Thomas Alva Edison mengembangkan lampu pijar praktis sehingga pencahayaan listrik dapat dinikmati masyarakat."},
+  {"c":"Pengetahuan Umum","q":"Pesawat terbang bermesin pertama direkayasa oleh ...","o":["Orville dan Wilbur Wright","Alexander Graham Bell","Henry Ford","Igor Sikorsky"],"a":0,"e":"Kakak-beradik Wright berhasil menerbangkan pesawat bermesin pertama pada 1903 di Kitty Hawk."},
+  {"c":"Pengetahuan Umum","q":"Alexander Graham Bell dikenal sebagai penemu ...","o":["Telepon","Televisi","Kompas","Mesin uap"],"a":0,"e":"Bell mematenkan telepon pada 1876 dan dikenang sebagai pelopor alat komunikasi jarak jauh."},
+  {"c":"Pengetahuan Umum","q":"Ilmuwan yang menyusun sistem penamaan binomial makhluk hidup adalah ...","o":["Carolus Linnaeus","Charles Darwin","Louis Pasteur","Gregor Mendel"],"a":0,"e":"Carolus Linnaeus mencetuskan tata nama binomial untuk mengelompokkan makhluk hidup secara ilmiah."},
+  {"c":"Pengetahuan Umum","q":"Organ tempat terjadinya pertukaran oksigen dan karbon dioksida pada manusia adalah ...","o":["Paru-paru","Jantung","Lambung","Hati"],"a":0,"e":"Di dalam paru-paru, alveolus menjadi tempat pertukaran oksigen dan karbon dioksida saat bernapas."},
+  {"c":"Pengetahuan Umum","q":"Organ yang bertugas memompa darah ke seluruh tubuh adalah ...","o":["Jantung","Paru-paru","Ginjal","Otak"],"a":0,"e":"Jantung memompa darah melalui sirkulasi darah besar dan kecil sehingga nutrisi sampai ke seluruh tubuh."},
+  {"c":"Pengetahuan Umum","q":"Organ yang menyaring limbah darah untuk menjadi urine adalah ...","o":["Ginjal","Hati","Lambung","Limpa"],"a":0,"e":"Ginjal menyaring darah, menghasilkan urine, dan menjaga keseimbangan air serta garam tubuh."},
+  {"c":"Pengetahuan Umum","q":"Vitamin yang dibentuk tubuh dengan bantuan sinar matahari pagi adalah ...","o":["Vitamin D","Vitamin C","Vitamin A","Vitamin K"],"a":0,"e":"Sinar matahari pagi membantu kulit membentuk vitamin D yang penting untuk kekuatan tulang."},
+  {"c":"Pengetahuan Umum","q":"Kebiasaan paling sederhana untuk mencegah penularan penyakit menular adalah ...","o":["Mencuci tangan dengan sabun","Berbagi barang pribadi bersama","Mengabaikan gejala demam berkepanjangan","Makan makanan yang jatuh ke lantai"],"a":0,"e":"Mencuci tangan dengan sabun membunuh kuman sehingga risiko penularan penyakit menurun drastis."},
+  {"c":"Pengetahuan Umum","q":"Kelompok zat gizi yang menjadi sumber energi utama tubuh adalah ...","o":["Karbohidrat","Vitamin","Mineral","Air"],"a":0,"e":"Karbohidrat, seperti nasi dan jagung, merupakan sumber energi utama bagi kegiatan tubuh."},
+  {"c":"Pengetahuan Umum","q":"Penyakit yang disebabkan oleh virus SARS-CoV-2 dan menjadi pandemi pada 2020 adalah ...","o":["COVID-19","Demam berdarah dengue","Tifus","Malaria"],"a":0,"e":"COVID-19 disebabkan oleh virus SARS-CoV-2 dan dinyatakan sebagai pandemi dunia pada 2020."}
 ];
 const MONSTER_BANK=[
   {"c":"Matematika Cepat","q":"7 × 8 = ...","o":["56","48","64","54"],"a":0,"e":"7 × 8 = 56."},
@@ -515,8 +617,8 @@ function validateBanks(){
   if(Math.max(...dist)-Math.min(...dist)>2)errors.push(label+' distribusi posisi jawaban tidak seimbang: '+dist.join('/'));
   return dist;
  };
- const doorDist=check(BANK,'BANK',150),monDist=check(MONSTER_BANK,'MONSTER_BANK',40);
- const required={'Matematika':30,'IPS':30,'Sejarah Indonesia':30,'Bahasa Indonesia':30,'Bahasa Inggris':30};
+ const doorDist=check(BANK,'BANK',240),monDist=check(MONSTER_BANK,'MONSTER_BANK',40);
+ const required={'Matematika':40,'IPS':40,'Sejarah Indonesia':40,'Bahasa Indonesia':40,'Bahasa Inggris':40,'Pengetahuan Umum':40};
  for(const k in required)if((catCount[k]||0)<required[k])errors.push('Kategori '+k+' hanya '+(catCount[k]||0)+' soal, minimal '+required[k]);
  return{ok:errors.length===0,errors,counts:{bank:BANK.length,monster:MONSTER_BANK.length,categories:catCount},positions:{door:doorDist,monster:monDist}};
 }
@@ -527,25 +629,81 @@ function start(){
  S={t:0,lives:5,keys:0,inv:0,slow:0,msgT:0,st:{ok:0,bad:0,hits:0,traps:0,doors:0},ex:new Uint8Array(W*W),got:new Set(),doors:L.doors.map(i=>TIP[i]={i,left:0}),spikeT:0,spikeFlash:0,spikeSfxT:-99,monsterSfxT:-99,trapMap:new Map(),spikeStates:[],trapPrev:[],trapHitCycle:[]};
  L.traps.forEach((tile,i)=>{S.trapMap.set(tile,i);S.spikeStates[i]=spikeInfo(i);S.trapPrev[i]=S.spikeStates[i].s;S.trapHitCycle[i]=-1});
  P={x:1.5,y:1.5};R2=rng(SEED+7);Q=null;resetQuestions();
- M=L.mons.map(([x,y])=>({x:x+.5,y:y+.5,path:[],chase:0,cd:0,stun:0}));
+ M=L.mons.map(([x,y])=>({x:x+.5,y:y+.5,hx:x,hy:y,state:'patrol',chase:0,path:[],spd:0,cd:0,idleT:.3+R2()*1.6,retT:0,stun:0}));
  $('q').classList.remove('on');$('msg').style.display='none';mode='play';show(null);document.body.classList.add('play');resize();
  AUDIO.ensure();AUDIO.startBGM();syncAudioUI();
  toast('Cari 5 kunci! Jawab soal di pintu kayu dengan E / Spasi.',3);
 }
 function toMenu(){mode='menu';document.body.classList.remove('play');$('q').classList.remove('on');$('msg').style.display='none';AUDIO.stopBGM();show('menu')}
 function pathTo(m,tx,ty){const sx=Math.floor(m.x),sy=Math.floor(m.y),blk=new Uint8Array(W*W);for(const d of S.doors)if(d.left<=0)blk[d.i]=1;
+ for(let i=0;i<L.traps.length;i++){const inf=S.spikeStates[i];if(inf&&inf.s===2)blk[L.traps[i]]=1}
  const par=new Int32Array(W*W).fill(-1),q=[sy*W+sx];par[q[0]]=q[0];const T=ty*W+tx;
  for(let h=0;h<q.length&&par[T]<0;h++){const i=q[h],x=i%W,y=(i/W)|0;for(const[a,b]of DIRS){const j=(y+b)*W+x+a;if(j<0||j>=W*W||G[j]||blk[j]||par[j]>=0)continue;par[j]=i;q.push(j)}}
  const p=[];if(par[T]<0)return p;for(let i=T;i!==q[0];i=par[i])p.unshift([i%W,(i/W)|0]);return p}
+// Monster AI constants. SEE < DROP (hysteresis): monsters only start chasing
+// inside SEE tiles and stop chasing beyond DROP tiles, then return home after
+// a delay. Speeds are kept well below the player's 4.6 (no sudden jumps).
+const MON={SEE:4.6,DROP:7.8,SPD:2.6,SPD_HOME:1.7,SPD_WALK:1.25,DELAY:1.4,REPATH:.4};
+function pathBlocked(m){
+ const t=m.path[0];if(!t)return false;
+ const si=spikeIndexAt(t[0],t[1]);
+ return solid(t[0],t[1])||(si>=0&&S.spikeStates[si].s===2)}
+// Same collision rules as the player's hit(): walls, closed (locked) doors and
+// currently active spikes block movement; the entity's own tile is exempt so
+// it can still leave a square it stands on. Never teleports through obstacles.
+function mBlocked(m,x,y){
+ const cur=spikeIndexAt(Math.floor(m.x),Math.floor(m.y)),r=.24;
+ const pts=[[x-r,y-r],[x+r,y-r],[x-r,y+r],[x+r,y+r]];
+ for(const[px,py]of pts){
+  const tx=Math.floor(px),ty=Math.floor(py);
+  if(solid(tx,ty))return true;
+  const si=spikeIndexAt(tx,ty);
+  if(si>=0&&si!==cur&&S.spikeStates[si]&&S.spikeStates[si].s===2)return true}
+ return false}
 function mStep(m,dt){
  if(m.stun>0){m.stun-=dt;return}
  const d=Math.hypot(P.x-m.x,P.y-m.y);
- if(d<6.5){if(!m.chase){m.chase=1;if(S.spikeT-S.monsterSfxT>1.2){S.monsterSfxT=S.spikeT;sfx('monster')}}}else if(d>10)m.chase=0;
+ // --- perception: chase with hysteresis -------------------------------
+ if(m.state==='chase'){
+  m.chase=1;
+  if(d>MON.DROP){m.state='lost';m.chase=0;m.retT=MON.DELAY;m.path=[];m.cd=0;return}
+ }else if(d<MON.SEE){
+  if(!m.chase&&S.spikeT-S.monsterSfxT>1.2){S.monsterSfxT=S.spikeT;sfx('monster')}
+  m.state='chase';m.chase=1;m.cd=0;
+ }else if(m.state==='lost'){ // short delay before going back to idle
+  m.retT-=dt;
+  if(m.retT<=0){m.state='home';m.chase=0;m.cd=.5;m.path=pathTo(m,m.hx,m.hy)}
+ }
  m.cd-=dt;
- if(m.chase&&m.cd<=0){m.cd=.35;m.path=pathTo(m,Math.floor(P.x),Math.floor(P.y))}
- if(!m.path.length&&!m.chase){const[wx,wy]=L.cells[Math.floor(R2()*L.cells.length)];m.path=pathTo(m,wx,wy)}
- const t=m.path[0];if(!t)return;const dx=t[0]+.5-m.x,dy=t[1]+.5-m.y,l=Math.hypot(dx,dy),sp=(m.chase?3.3:2)*dt;
- if(l<=sp){m.x=t[0]+.5;m.y=t[1]+.5;m.path.shift()}else{m.x+=dx/l*sp;m.y+=dy/l*sp}
+ // A door closing or a spike activating under our path invalidates it.
+ if(m.path.length&&pathBlocked(m)){m.path=[];m.cd=0}
+ let spTgt=m.state==='chase'?MON.SPD:m.state==='home'?MON.SPD_HOME:MON.SPD_WALK;
+ // --- decide route ----------------------------------------------------
+ if(m.state==='chase'){
+  if(m.cd<=0){m.cd=MON.REPATH;const p=pathTo(m,Math.floor(P.x),Math.floor(P.y));
+   if(p.length)m.path=p;else{m.path=[];m.cd=.3}} // target unreachable: wait, then retry
+ }else if(m.state==='home'){
+  if(!m.path.length){
+   if(Math.hypot(m.x-(m.hx+.5),m.y-(m.hy+.5))<.6){m.state='patrol';m.idleT=.8}
+   else if(m.cd<=0){m.cd=.6;const p=pathTo(m,m.hx,m.hy);if(!p.length){m.state='patrol';m.idleT=1}}
+  }
+ }else{ // patrol / idle while outside detection range
+  if(m.idleT>0){m.idleT-=dt;spTgt=0}
+  else if(!m.path.length&&m.cd<=0){m.cd=.6;const[wx,wy]=L.cells[Math.floor(R2()*L.cells.length)];const p=pathTo(m,wx,wy);if(p.length)m.path=p;else m.idleT=.5}
+ }
+ // --- move along path with collision (axis separated, like the player) -
+ let moved=false;
+ if(m.path.length){
+  const t=m.path[0],dx=t[0]+.5-m.x,dy=t[1]+.5-m.y,l=Math.hypot(dx,dy);
+  m.spd+=(spTgt-m.spd)*Math.min(1,6*dt); // ease speed, no sudden changes
+  const st=m.spd*dt;
+  let nx=m.x,ny=m.y;
+  if(l<=st){nx+=dx;ny+=dy;m.path.shift();if(!m.path.length&&m.state==='patrol')m.idleT=.8+R2()*1.5}
+  else{nx+=dx/l*st;ny+=dy/l*st}
+  if(!mBlocked(m,nx,m.y)){m.x=nx;moved=true}
+  if(!mBlocked(m,m.x,ny)){m.y=ny;moved=true}
+ }else m.spd+=(0-m.spd)*Math.min(1,6*dt);
+ if(!moved&&m.path.length){if(m.state==='chase'){m.cd=0;m.path=[]}} // stuck: re-route
 }
 function mv(dx,dy){if(!hit(P.x+dx,P.y+dy)){P.x+=dx;P.y+=dy}}
 function update(dt){
@@ -635,7 +793,7 @@ $('volSfx').oninput=function(){AUDIO.ensure();AUDIO.setSfxVolume(+this.value/100
 ['pointerdown','keydown'].forEach(ev=>addEventListener(ev,()=>{AUDIO.ensure();if(mode==='play')AUDIO.startBGM()},{passive:true}));
 
 // --------------------------------- render ----------------------------------
-const C={f1:'#1a2a4d',f2:'#16233f',w:'#0a0f1f',we:'#1e4d6b'};
+const C={f1:'#22345e',f2:'#1c2b52',w:'#050912',we:'#1e4d6b'};
 function drawSpike(info,px,py){
  const s=info.s;
  cx.fillStyle='#2a1218';cx.fillRect(px+1,py+1,ts-2,ts-2);
@@ -665,7 +823,7 @@ function draw(){
  const vis=(x,y)=>{const d=Math.hypot(x+.5-P.x,y+.5-P.y);return Math.max(0,Math.min(1,1-(d-2.2)/3.8))};
  for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const i=y*W+x,v=vis(x,y),e=S.ex[i];if(!e&&v<=0)continue;
   const px=x*ts-ox,py=y*ts-oy;
-  if(G[i]){cx.fillStyle=C.w;cx.fillRect(px,py,ts,ts);cx.fillStyle=C.we;cx.fillRect(px,py,ts,2);cx.fillRect(px,py,2,ts);cx.fillStyle='#111a33';cx.fillRect(px+4,py+4,ts-8,ts-8)}
+  if(G[i]){cx.fillStyle=C.w;cx.fillRect(px,py,ts,ts);cx.fillStyle=C.we;cx.fillRect(px,py,ts,2);cx.fillRect(px,py,2,ts);cx.fillStyle='#0a1226';cx.fillRect(px+4,py+4,ts-8,ts-8)}
   else{cx.fillStyle=(x+y)&1?C.f1:C.f2;cx.fillRect(px,py,ts,ts);cx.fillStyle='#ffffff08';cx.fillRect(px+ts/2,py+ts/2,2,2)}
   const a=1-Math.max(v,e?.4:0);if(a>0){cx.fillStyle='rgba(3,6,14,'+a+')';cx.fillRect(px,py,ts,ts)}}
  const sx=x=>x*ts-ox,sy=y=>y*ts-oy,see=(x,y)=>S.ex[Math.floor(y)*W+Math.floor(x)];
@@ -683,7 +841,7 @@ function draw(){
  if(S.spikeFlash>0){cx.fillStyle='rgba(239,68,68,'+(S.spikeFlash*.38)+')';cx.fillRect(0,0,w,h)}
  $('tm').textContent=fmt(S.t);$('hp').textContent='♥'.repeat(S.lives)+'♡'.repeat(5-S.lives);$('hp').style.color='#f87171';$('ky').textContent='🔑 '+S.keys+'/5';
  const m=mx;m.fillStyle='#000';m.fillRect(0,0,180,180);const k=4;
- for(let y=0;y<W;y++)for(let x=0;x<W;x++)if(S.ex[y*W+x]){m.fillStyle=G[y*W+x]?'#0f1b36':'#2e4a7d';m.fillRect(x*k,y*k,k,k)}
+ for(let y=0;y<W;y++)for(let x=0;x<W;x++)if(S.ex[y*W+x]){m.fillStyle=G[y*W+x]?'#0a1224':'#35568c';m.fillRect(x*k,y*k,k,k)}
  for(const d of S.doors)if(S.ex[d.i]){m.fillStyle='#b4783c';m.fillRect((d.i%W)*k,((d.i/W)|0)*k,k,k)}
  L.traps.forEach((t,i)=>{if(S.ex[t]){const info=S.spikeStates[i];m.fillStyle=info.s===2?'#ef4444':info.s===1?'#fbbf24':'#7f1d1d';m.fillRect((t%W)*k+1,((t/W)|0)*k+1,2,2)}});
  L.keys.forEach((q,i)=>{if(!S.got.has(i)&&S.ex[q[1]*W+q[0]]){m.fillStyle='#fbbf24';m.fillRect(q[0]*k-1,q[1]*k-1,k+2,k+2)}});
